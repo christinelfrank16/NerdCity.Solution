@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+
 namespace NerdCity.Models
 {
     public class Game
@@ -29,6 +30,7 @@ namespace NerdCity.Models
             List<Game> gameList = JsonConvert.DeserializeObject<List<Game>>(jsonResponse["games"].ToString());
 
             return gameList;
+
         }
     }
 }

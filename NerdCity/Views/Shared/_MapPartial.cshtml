@@ -1,6 +1,13 @@
+@using BAMCIS.GeoJSON
+@using NerdCity.ViewModels
+@model IndexViewModel
+@{
+  var data = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GeoJsonData));
+  var data3  = ViewBag.Collect;
+}
 <html>
 <head>
-         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
@@ -11,8 +18,9 @@
 
   <div id="map"></div>
 
-  <script>
+  <script type="text/javascript">
 
+    var data2 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GeoJsonData) as string);
   // initialize the map
   var map = L.map('map').setView([45.5051, -122.6750], 13);
 
@@ -21,8 +29,21 @@
 	maxZoom: 19,
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
+  var geoLayer = L.geoJSON().addTo(map);
+  document.getElementById("test").appendChild(typeof data2);
+  data2.foreach(function(current){
+    geoLayer.addData(current);
+    document.getElementById("test").appendChild(current);
+  });
+  //myLayer.addData(Model);
 
 
   </script>
+<div id="hammertime">
+  @foreach(var current in Model.GeoJsonData)
+  {
+    
+  }
+</div>
 </body>
 </html>

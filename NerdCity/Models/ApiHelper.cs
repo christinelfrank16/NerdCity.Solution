@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using RestSharp;
+using System;
 
 
 namespace NerdCity.Models
@@ -15,11 +16,14 @@ namespace NerdCity.Models
             return response.Content;
         }
 
-        public static async Task<string> PlacesApiCall()
+        public static async Task<string> PlacesApiCall(string searchTerm)
         {
-            RestClient client = new RestClient("http://nominatim.openstreetmap.org/");
+            RestClient client = new RestClient("http://nominatim.openstreetmap.org/search");
             // NOT SURE WE CAN DO THIS
-            RestRequest request = new RestRequest($"home.json?format=geojson", Method.GET);
+            RestRequest request = new RestRequest($"home.json?", Method.GET);
+            searchTerm = "portland oregon games";
+            request.AddParameter("q", searchTerm);
+            request.AddParameter("format", "geojson");
             var response = await client.ExecuteTaskAsync(request);
             return response.Content;
         }

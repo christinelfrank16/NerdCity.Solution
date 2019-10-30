@@ -4,7 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using BAMCIS.GeoJSON;
 using NerdCity.Models;
+using NerdCity.ViewModels;
 
 namespace NerdCity.Controllers
 {
@@ -12,8 +14,16 @@ namespace NerdCity.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var features = NerdCity.Models.Feature.GetFeatures("");
+            ViewBag.Collect = features;
+            return View(new IndexViewModel(){GeoJsonData = features} );
         }
+
+        // [HttpGet, ActionName("Index")]
+        // public IActionResult IndexAndPoints(FeatureCollection showStores)
+        // {
+        //     return View(showStores);
+        // }
 
         public IActionResult Privacy()
         {
