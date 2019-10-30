@@ -23,7 +23,7 @@ namespace NerdCity.Models
 
         public static List<Game> GetGames(string apiKey)
         {
-            var apiCallTask = ApiHelper.ApiCall(apiKey);
+            var apiCallTask = ApiCallHelper.GameApiCall(apiKey);
             var result = apiCallTask.Result;
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(result);
             List<Game> gameList = JsonConvert.DeserializeObject<List<Game>>(jsonResponse["games"].ToString());
