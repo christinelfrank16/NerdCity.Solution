@@ -1,10 +1,6 @@
-@using BAMCIS.GeoJSON
 @using NerdCity.ViewModels
 @model IndexViewModel
-@{
-  var data = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GeoJsonData));
-  var data3  = ViewBag.Collect;
-}
+
 <html>
 <head>
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
@@ -15,29 +11,28 @@
    crossorigin=""></script>
 </head>
 <body>
-<div id="test">
 
-</div>
+  <form id="searchForm" class="form-inline md-form mr-auto mb-4" method="post">
+    <input name="searchValue" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit">Search</button>
+  </form>
   <div id="map"></div>
 
   <script type="text/javascript">
 
-    var data2 = '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GeoJsonData) as string)';
-  // initialize the map
-  var map = L.map('map').setView([45.5051, -122.6750], 13);
+    var data = '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GeoJsonData) as string)';
+    // initialize the map
+    var map = L.map('map').setView([45.5051, -122.6750], 12);
 
-  // load a tile layer
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	maxZoom: 19,
-	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
-  var geoLayer = L.geoJSON().addTo(map);
-  document.getElementById("test").innerHTML = data2;
+    // load a tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    var geoLayer = L.geoJSON().addTo(map);
+    var list = JSON.parse(data);
 
-    geoLayer.addData(data2);
-    
-  //myLayer.addData(Model);
-
+    geoLayer.addData(list);
 
   </script>
 

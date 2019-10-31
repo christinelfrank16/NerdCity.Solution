@@ -21,8 +21,7 @@ namespace NerdCity.Models
             RestClient client = new RestClient("http://nominatim.openstreetmap.org/search");
             // NOT SURE WE CAN DO THIS
             RestRequest request = new RestRequest($"home.json?", Method.GET);
-            searchTerm = "portland oregon games";
-            request.AddParameter("q", searchTerm);
+            request.AddParameter("q", searchTerm + " games");
             request.AddParameter("format", "geojson");
             var response = await client.ExecuteTaskAsync(request);
             return response.Content;

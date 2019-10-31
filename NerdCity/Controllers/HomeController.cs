@@ -12,11 +12,24 @@ namespace NerdCity.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public ActionResult Index(string search)
         {
-            var features = NerdCity.Models.Feature.GetFeatures("");
-            ViewBag.Collect = features;
-            return View(new IndexViewModel(){GeoJsonData = features} );
+            FeatureCollection collection;
+            if(search == null)
+            {
+                collection = NerdCity.Models.Feature.GetFeatures("");
+            }
+            else
+            {
+                collection = NerdCity.Models.Feature.GetFeatures(search);
+            }
+            return View(new IndexViewModel(){GeoJsonData = collection } );
+        }
+
+        [HttpPost,ActionName("Index")]
+        public ActionResult FormSubmit(string searchValue)
+        {
+            return RedirectToAction("Index", new { search = searchValue });
         }
 
         // [HttpGet, ActionName("Index")]
