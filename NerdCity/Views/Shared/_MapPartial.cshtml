@@ -19,7 +19,21 @@
   <div id="map"></div>
 
   <script type="text/javascript">
+    var dieIcon = L.icon({
+      // iconUrl: 'https://images-na.ssl-images-amazon.com/images/I/51jp39VD+uL.png',
+      iconUrl: 'img/die_pin.png',
+      iconSize: [35,35],
+      popupAnchor: [0,0],
+      iconAnchor: [17.5,36]
+    });
 
+    function layerMarkers (feature, latlng){
+      var marker = L.marker(latlng, { icon: dieIcon });
+      if(feature.properties && feature.properties.display_name) {
+        layer.bindPopup(feature.properties.display_name);
+      }
+      return marker;
+    }
     var data = '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GeoJsonData) as string)';
     // initialize the map
     var map = L.map('map').setView([45.5051, -122.6750], 12);
@@ -29,10 +43,17 @@
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    var geoLayer = L.geoJSON().addTo(map);
     var list = JSON.parse(data);
+    var geoLayer = L.geoJSON(list, { 
+      pointToLayer: function (feature, latlng){
+        var marker = L.marker(latlng, { icon: dieIcon });
+        if(feature.properties && feature.properties.display_name) {
+          marker.bindPopup(feature.properties.display_name);
+        }
+        return marker;
+      }
+     }).addTo(map);
 
-    geoLayer.addData(list);
 
   </script>
 
