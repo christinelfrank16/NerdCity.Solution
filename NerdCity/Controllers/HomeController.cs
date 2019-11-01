@@ -12,16 +12,17 @@ namespace NerdCity.Controllers
 {
     public class HomeController : Controller
     {
+        private string _places_key = System.Environment.GetEnvironmentVariable("mapquest_key");
         public ActionResult Index(string search)
         {
             FeatureCollection collection;
             if(search == null)
             {
-                collection = NerdCity.Models.Feature.GetFeatures("");
+                collection = NerdCity.Models.Feature.GetFeatures(_places_key, "");
             }
             else
             {
-                collection = NerdCity.Models.Feature.GetFeatures(search);
+                collection = NerdCity.Models.Feature.GetFeatures(_places_key, search);
             }
             return View(new IndexViewModel(){GeoJsonData = collection } );
         }

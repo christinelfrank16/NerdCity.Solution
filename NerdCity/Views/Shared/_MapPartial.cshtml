@@ -27,13 +27,6 @@
       iconAnchor: [17.5,36]
     });
 
-    function layerMarkers (feature, latlng){
-      var marker = L.marker(latlng, { icon: dieIcon });
-      if(feature.properties && feature.properties.display_name) {
-        layer.bindPopup(feature.properties.display_name);
-      }
-      return marker;
-    }
     var data = '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GeoJsonData) as string)';
     // initialize the map
     var map = L.map('map').setView([45.5051, -122.6750], 12);
@@ -47,8 +40,8 @@
     var geoLayer = L.geoJSON(list, { 
       pointToLayer: function (feature, latlng){
         var marker = L.marker(latlng, { icon: dieIcon });
-        if(feature.properties && feature.properties.display_name) {
-          marker.bindPopup(feature.properties.display_name);
+        if(feature.properties && feature.properties.Name) {
+          marker.bindPopup(feature.properties.Name);
         }
         return marker;
       }
